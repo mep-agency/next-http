@@ -1,0 +1,38 @@
+{
+  "name": "@mep-agency/next-http",
+  "version": "1.0.0-alpha1",
+  "private": false,
+  "description": "A set of tools to implement common HTTP patterns with NextJS",
+  "author": "Marco Lipparini <developer@liarco.net>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mep-agency/next-http.git"
+  },
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "prepack": "yarn build",
+    "build": "rm -rf ./dist && rollup -c",
+    "watch": "rm -rf ./dist && rollup -cw",
+    "format": "prettier --write \"**/*.{ts,md,scss,css,js}\"",
+    "lint": "prettier --check \"**/*.{ts,md,scss,css,js}\""
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "next": "^14.1.3",
+    "prettier": "^2.8.8",
+    "rollup": "^4.12.1",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.4.2"
+  },
+  "peerDependencies": {
+    "next": "^14.1.3"
+  }
+}
