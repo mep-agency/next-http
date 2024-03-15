@@ -27,7 +27,7 @@ export type AuthenticatedErrorHandler<TUser, TData> = (params: {
   user: TUser | null;
   data: TData | null;
 }) => NextResponse | Promise<NextResponse>;
-export type UserFetcher<TUser, TData> = (params: { request: NextRequest; data: TData }) => TUser | Promise<TUser>;
+export type UserFetcher<TUser> = (params: { request: NextRequest }) => TUser | Promise<TUser>;
 
 export const basicErrorHandler: ErrorHandler<any> = async ({ error }) => {
   return error.response();
@@ -78,7 +78,7 @@ export const createHandler =
   };
 
 type CreateAuthenticatedHandlerParams<TUser, TData> = {
-  userFetcher: UserFetcher<TUser, TData>;
+  userFetcher: UserFetcher<TUser>;
   inputNormalizer?: RequestInputNormalizer<TData>;
   requestHandler: AuthenticatedRequestHandler<TUser, TData>;
   errorHandler?: AuthenticatedErrorHandler<TUser, TData>;
@@ -96,8 +96,8 @@ export const createAuthenticatedHandler =
     let user = null;
 
     try {
+      user = await userFetcher({ request });
       normalizedData = await inputNormalizer({ request, data });
-      user = await userFetcher({ request, data: normalizedData });
 
       return await requestHandler({ request, user, data: normalizedData });
     } catch (error) {
