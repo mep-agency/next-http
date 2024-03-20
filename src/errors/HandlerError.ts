@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-type ErrorParams = {
+type HandlerErrorProperties = {
   type?: string;
   title?: string;
   status?: number;
@@ -10,23 +10,23 @@ type ErrorParams = {
 };
 
 export default class HandlerError {
-  constructor(public readonly params: ErrorParams = {}) {
-    if (this.params.title === undefined) {
-      this.params.title = 'Internal server error';
+  constructor(public readonly properties: HandlerErrorProperties = {}) {
+    if (this.properties.title === undefined) {
+      this.properties.title = 'Internal server error';
     }
 
-    if (this.params.status === undefined) {
-      this.params.status = 500;
+    if (this.properties.status === undefined) {
+      this.properties.status = 500;
     }
   }
 
   public response() {
-    return new NextResponse(this.params.title, { status: this.params.status });
+    return new NextResponse(this.properties.title, { status: this.properties.status });
   }
 
   public jsonResponse() {
-    return NextResponse.json(this.params, {
-      status: this.params.status,
+    return NextResponse.json(this.properties, {
+      status: this.properties.status,
       headers: { 'Content-Type': 'application/problem+json' },
     });
   }
