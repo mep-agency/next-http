@@ -10,7 +10,7 @@ type ErrorParams = {
 };
 
 export default class HandlerError {
-  constructor(public readonly params: ErrorParams) {
+  constructor(public readonly params: ErrorParams = {}) {
     if (this.params.title === undefined) {
       this.params.title = 'Internal server error';
     }
