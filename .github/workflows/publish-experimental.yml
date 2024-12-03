@@ -16,6 +16,6 @@ jobs:
 
       - run: npm i
       - run: npm run lint && npm run build
-      - run: npm version --no-git-tag-version --no-commit-hooks --new-version "0.0.0-experimental.${{ github.sha }}" && npm publish
+      - run: npm version --no-git-tag-version --commit-hooks false "0.0.0-experimental.${{ github.sha }}" && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
