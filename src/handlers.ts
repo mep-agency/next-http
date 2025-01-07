@@ -11,6 +11,11 @@ export type RequestInputNormalizer<TData> = (params: {
   request: NextRequest;
   data: NextRequestData;
 }) => TData | Promise<TData>;
+export type AuthenticatedRequestInputNormalizer<TUser, TData> = (params: {
+  request: NextRequest;
+  data: NextRequestData;
+  user: TUser;
+}) => TData | Promise<TData>;
 export type ErrorHandler<TData> = (params: {
   error: HandlerError;
   request: NextRequest;
@@ -79,7 +84,7 @@ export const createHandler =
 
 type CreateAuthenticatedHandlerParams<TUser, TData> = {
   userFetcher: UserFetcher<TUser>;
-  inputNormalizer?: RequestInputNormalizer<TData>;
+  inputNormalizer?: AuthenticatedRequestInputNormalizer<TUser, TData>;
   requestHandler: AuthenticatedRequestHandler<TUser, TData>;
   errorHandler?: AuthenticatedErrorHandler<TUser, TData>;
 };
@@ -97,7 +102,7 @@ export const createAuthenticatedHandler =
 
     try {
       user = await userFetcher({ request });
-      normalizedData = await inputNormalizer({ request, data });
+      normalizedData = await inputNormalizer({ request, data, user });
 
       return await requestHandler({ request, user, data: normalizedData });
     } catch (error) {
