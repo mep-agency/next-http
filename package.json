@@ -17,7 +17,7 @@
     "/dist"
   ],
   "scripts": {
-    "prepack": "yarn build",
+    "prepack": "npm run build",
     "build": "rm -rf ./dist && rollup -c",
     "watch": "rm -rf ./dist && rollup -cw",
     "format": "prettier --write \"**/*.{ts,md,scss,css,js}\"",
