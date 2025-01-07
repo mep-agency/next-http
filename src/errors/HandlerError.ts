@@ -11,12 +11,39 @@ type HandlerErrorProperties = {
 
 export default class HandlerError {
   constructor(public readonly properties: HandlerErrorProperties = {}) {
-    if (this.properties.title === undefined) {
+    if (this.properties.status === undefined) {
+      this.properties.title = 'Internal server error';
+      this.properties.status = 500;
+
+      return;
+    }
+
+    if (this.properties.title !== undefined) {
+      return;
+    }
+
+    if (this.properties.status === 500) {
       this.properties.title = 'Internal server error';
     }
 
-    if (this.properties.status === undefined) {
-      this.properties.status = 500;
+    if (this.properties.status === 404) {
+      this.properties.title = 'Not found';
+    }
+
+    if (this.properties.status === 400) {
+      this.properties.title = 'Bad request';
+    }
+
+    if (this.properties.status === 401) {
+      this.properties.title = 'Unauthorized';
+    }
+
+    if (this.properties.status === 403) {
+      this.properties.title = 'Forbidden';
+    }
+
+    if (this.properties.status === 405) {
+      this.properties.title = 'Method not allowed';
     }
   }
 
