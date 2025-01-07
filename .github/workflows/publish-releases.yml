@@ -15,8 +15,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@mep-agency'
 
-      - run: yarn
-      - run: yarn lint && yarn build
-      - run: yarn publish
+      - run: npm i
+      - run: npm run lint && npm run build
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -11,5 +11,5 @@ jobs:
         with:
           node-version: '20.x'
 
-      - run: yarn
-      - run: yarn lint
+      - run: npm i
+      - run: npm run lint
